@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">eBasket</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_slip">SlipActivity</string>
+    <string name="title_activity_scanner">ScannerActivity</string>
+    <string name="title_activity_test1">Test1</string>
+    <string name="title_activity_scanner_caller">ScannerCallerActivity</string>
+
+</resources>
