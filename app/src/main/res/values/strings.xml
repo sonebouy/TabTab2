@@ -8,6 +8,8 @@
     <string name="title_activity_slip">SlipActivity</string>
     <string name="title_activity_scanner">ScannerActivity</string>
     <string name="title_activity_test1">Test1</string>
-    <string name="title_activity_scanner_caller">ScannerCallerActivity</string>
-
+    <string name="negative_button">negative</string>
+    <string name="positive_button">positive</string>
+    <string name="decision">decision</string>
+    <string name="set_button">Set</string>
 </resources>

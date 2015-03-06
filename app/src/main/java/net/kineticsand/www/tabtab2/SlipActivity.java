@@ -1,5 +1,6 @@
 package net.kineticsand.www.tabtab2;
 
+import android.app.Dialog;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +60,7 @@ public class SlipActivity extends ActionBarActivity {
             total+=items[i].amount * items[i].product.price;
         }
         adapter = new BasketAdapter(this,items);
+        adapter.slipActivity = this;
         listview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -91,6 +94,68 @@ public class SlipActivity extends ActionBarActivity {
         refreshAdapter();
     }
 
+    public void openNumberDialog(String productName,int oldValue){
+        final Dialog dialog = new Dialog(this);
+
+        //tell the Dialog to use the dialog.xml as it's layout description
+        dialog.setContentView(R.layout.number_dialog);
+        dialog.setTitle("Set quantity of product");
+
+        final NumberPicker np = (NumberPicker)dialog.findViewById(R.id.numberPicker);
+        np.setMinValue(0);
+        np.setMaxValue(99);
+        np.setWrapSelectorWheel(false);
+        np.setValue(oldValue);
+
+        final TextView tv = (TextView)dialog.findViewById(R.id.dialogText);
+        tv.setText(productName);
+
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButton);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                int newValue = np.getValue();
+                String _productName = tv.getText().toString();
+              //  showText(value+"");
+               // showtext(newValue+"");
+                setProduct(_productName,newValue);
+            }
+        });
+
+        dialog.show();
+    }
+
+    void setProduct(String productName,int newValue)
+    {
+        int index = -1;
+        for(int i=0;i<allItem.size();i++)
+        {
+            ItemInfo item = allItem.get(i);
+            if(item.product.name.equals(productName))
+            {
+                index = i;
+                break;
+            }
+        }
+        if(index==-1)
+        {
+            return;
+        }
+        if(newValue<=0)
+        {
+            allItem.remove(index);
+        }else {
+            ItemInfo item = allItem.get(index);
+            item.amount = newValue;
+        }
+        refreshAdapter();
+    }
+
+
+    void showtext(String text) {
+        Toast.makeText(this,text,Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

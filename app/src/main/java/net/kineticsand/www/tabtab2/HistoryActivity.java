@@ -1,5 +1,6 @@
 package net.kineticsand.www.tabtab2;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,8 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class HistoryActivity extends ActionBarActivity {
 
@@ -31,9 +35,55 @@ public class HistoryActivity extends ActionBarActivity {
 
         showBtn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ProductDict.getInstance().clearProducts();
+                open();
+             //   ProductDict.getInstance().clearProducts();
             }
         });
+    }
+
+    public void open(){
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//        alertDialogBuilder.setMessage(R.string.decision);
+//        alertDialogBuilder.setPositiveButton(R.string.positive_button,
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface arg0, int arg1) {
+//                        showText("Positive");
+//                    }
+//                });
+//        alertDialogBuilder.setNegativeButton(R.string.negative_button,
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        showText("Negative");
+//                    }
+//                });
+//
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+        final Dialog dialog = new Dialog(this);
+
+        //tell the Dialog to use the dialog.xml as it's layout description
+        dialog.setContentView(R.layout.number_dialog);
+        dialog.setTitle("Set quantity of product");
+
+        final NumberPicker np = (NumberPicker)dialog.findViewById(R.id.numberPicker);
+        np.setMinValue(0);
+        np.setMaxValue(99);
+        np.setWrapSelectorWheel(false);
+        np.setValue(10);
+
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButton);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                int value = np.getValue();
+                showText(value+"");
+            }
+        });
+
+        dialog.show();
     }
 
     void showText(String msg)
