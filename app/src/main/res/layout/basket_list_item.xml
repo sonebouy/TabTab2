@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:text="chocalate"
             android:id="@+id/itemName"
-            android:layout_weight="0.48" />
+            android:layout_weight="0.48"
+            android:paddingLeft="10dp"/>
         <TextView
             android:layout_width="40dp"
             android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
             android:text="120"
             android:gravity="right"
             android:id="@+id/itemPrice"
-            android:layout_weight="0.46" />
+            android:layout_weight="0.46"
+            android:paddingRight="10dp"/>
     </LinearLayout>
 </RelativeLayout>

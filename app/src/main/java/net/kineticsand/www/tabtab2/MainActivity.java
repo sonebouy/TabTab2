@@ -3,6 +3,7 @@ package net.kineticsand.www.tabtab2;
 import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +11,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -24,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         myTabHost = (TabHost)findViewById(R.id.TabHostMasterUNG);
         myLocalActivityManager = new LocalActivityManager(this,false);
@@ -58,6 +62,11 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+
+        for (int i = 0; i < myTabHost.getTabWidget().getChildCount(); i++) {
+            TextView tv = (TextView) myTabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTextColor(Color.parseColor("#FFFFFF"));
+        }
 
         if( Build.VERSION.SDK_INT >= 9){
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

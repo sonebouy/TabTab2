@@ -12,4 +12,6 @@
     <string name="positive_button">positive</string>
     <string name="decision">decision</string>
     <string name="set_button">Set</string>
+    <string name="title_activity_setting">setting</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
 </resources>
