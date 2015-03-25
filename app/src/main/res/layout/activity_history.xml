@@ -6,28 +6,15 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="net.kineticsand.www.tabtab2.HistoryActivity">
 
-    <TextView android:text="Setting" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update"
-        android:id="@+id/showBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:id="@+id/showBtn2"
-        android:layout_alignTop="@+id/showBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="63dp"
-        android:layout_marginEnd="63dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="top|center">
+        <TextView android:text="ประวัติการซื้อสินค้า" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:paddingBottom="15dp" />
+    </LinearLayout>
 
 </RelativeLayout>

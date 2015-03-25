@@ -1,9 +1,13 @@
 package net.kineticsand.www.tabtab2;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 
 public class SplashScreen extends ActionBarActivity {
@@ -12,8 +16,31 @@ public class SplashScreen extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        getSupportActionBar().hide();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                changeToMainActivity();
+            }
+        }, 3000);
+
+        RelativeLayout splashscreenLayout=(RelativeLayout)findViewById(R.id.splashscreenLayout);
+
+        splashscreenLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                changeToMainActivity();
+            }
+        });
     }
 
+    void changeToMainActivity()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

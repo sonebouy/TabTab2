@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
         TabHost.TabSpec spec;
 
         Intent goHistory = new Intent().setClass(this,HistoryActivity.class);
-        spec = myTabHost.newTabSpec("Tab1").setIndicator("Setting",
+        spec = myTabHost.newTabSpec("Tab1").setIndicator("History",
                 getResources().getDrawable(R.drawable.icon_history))
                 .setContent(goHistory);
         myTabHost.addTab(spec);
@@ -52,6 +53,12 @@ public class MainActivity extends ActionBarActivity {
         spec = myTabHost.newTabSpec("Tab3").setIndicator("Camera",
                 getResources().getDrawable(R.drawable.icon_camera))
                 .setContent(goScanner);
+        myTabHost.addTab(spec);
+
+        Intent goSetting = new Intent().setClass(this,SettingActivity.class);
+        spec = myTabHost.newTabSpec("Tab4").setIndicator("Setting",
+                getResources().getDrawable(R.drawable.icon_camera))
+                .setContent(goSetting);
         myTabHost.addTab(spec);
 
         myTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
