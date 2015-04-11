@@ -18,7 +18,10 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -47,6 +50,27 @@ public class SlipActivity extends ActionBarActivity {
 
         allItem = new ArrayList<ItemInfo>();
         refreshAdapter();
+
+        saveBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                for(int i=0;i<allItem.size();i++)
+                {
+                    ItemInfo item = allItem.get(i);
+                    History history = new History();
+                    history.name = item.product.name;
+                    history.amount = item.amount+"";
+                    history.price = item.product.price+"";
+
+                    DateFormat dateFormat = new SimpleDateFormat("d/M/y");
+                    Date date = new Date();
+                    history.insertDate = dateFormat.format(date);
+
+                    HistoryDict.getInstance().addHistory(history);
+                }
+                allItem = new ArrayList<ItemInfo>();
+                refreshAdapter();
+            }
+        });
     }
 
     void refreshAdapter(){

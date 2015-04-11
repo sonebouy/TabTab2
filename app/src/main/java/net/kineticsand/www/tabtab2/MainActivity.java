@@ -81,6 +81,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         ProductDict.getInstance().init(this.getApplicationContext());
+        HistoryDict.getInstance().init(this.getApplicationContext());
     }
 
 

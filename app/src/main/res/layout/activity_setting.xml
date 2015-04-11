@@ -30,4 +30,13 @@
         android:layout_marginRight="63dp"
         android:layout_marginEnd="63dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CLEAR HISTORY"
+        android:id="@+id/clearHistoryBtn"
+        android:layout_above="@+id/showBtn"
+        android:layout_alignLeft="@+id/showBtn"
+        android:layout_alignStart="@+id/showBtn" />
+
 </RelativeLayout>

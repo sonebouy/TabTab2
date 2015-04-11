@@ -15,6 +15,7 @@ public class SettingActivity extends ActionBarActivity {
 
     Button showBtn;
     Button showBtn2;
+    Button clearHistoryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class SettingActivity extends ActionBarActivity {
 
         showBtn = (Button) findViewById(R.id.showBtn);
         showBtn2 = (Button) findViewById(R.id.showBtn2);
+        clearHistoryButton = (Button)findViewById(R.id.clearHistoryBtn);
 
         showBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -33,35 +35,15 @@ public class SettingActivity extends ActionBarActivity {
 
         showBtn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                open();
-                //   ProductDict.getInstance().clearProducts();
-            }
-        });
-    }
-
-    public void open(){
-        final Dialog dialog = new Dialog(this);
-
-        dialog.setContentView(R.layout.number_dialog);
-        dialog.setTitle("Set quantity of product");
-
-        final NumberPicker np = (NumberPicker)dialog.findViewById(R.id.numberPicker);
-        np.setMinValue(0);
-        np.setMaxValue(99);
-        np.setWrapSelectorWheel(false);
-        np.setValue(10);
-
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButton);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                int value = np.getValue();
-                showText(value+"");
+                ProductDict.getInstance().clearProducts();
             }
         });
 
-        dialog.show();
+        clearHistoryButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                HistoryDict.getInstance().clearHistories();
+            }
+        });
     }
 
     void showText(String msg)
