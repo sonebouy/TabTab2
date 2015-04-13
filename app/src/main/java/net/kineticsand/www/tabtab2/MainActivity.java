@@ -24,6 +24,12 @@ public class MainActivity extends ActionBarActivity {
     private TabHost myTabHost;
     private LocalActivityManager myLocalActivityManager;
 
+    int PromotionTabIndex=0;
+    int HistoryTabIndex=1;
+    int SlipTabIndex=2;
+    int ScannerTabIndex=3;
+    int SettingTabIndex=4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,26 +43,32 @@ public class MainActivity extends ActionBarActivity {
 
         TabHost.TabSpec spec;
 
+        Intent goPromotion = new Intent().setClass(this,PromotionActivity.class);
+        spec = myTabHost.newTabSpec("TabPromotion").setIndicator("Promotion",
+                getResources().getDrawable(R.drawable.icon_history))
+                .setContent(goPromotion);
+        myTabHost.addTab(spec);
+
         Intent goHistory = new Intent().setClass(this,HistoryActivity.class);
-        spec = myTabHost.newTabSpec("Tab1").setIndicator("History",
+        spec = myTabHost.newTabSpec("TabHistory").setIndicator("History",
                 getResources().getDrawable(R.drawable.icon_history))
                 .setContent(goHistory);
         myTabHost.addTab(spec);
 
         Intent goSlip = new Intent().setClass(this,SlipActivity.class);
-        spec = myTabHost.newTabSpec("Tab2").setIndicator("List",
+        spec = myTabHost.newTabSpec("TabList").setIndicator("List",
                 getResources().getDrawable(R.drawable.icon_list))
                 .setContent(goSlip);
         myTabHost.addTab(spec);
 
         Intent goScanner = new Intent().setClass(this,ScannerActivity.class);
-        spec = myTabHost.newTabSpec("Tab3").setIndicator("Camera",
+        spec = myTabHost.newTabSpec("TabCamera").setIndicator("Camera",
                 getResources().getDrawable(R.drawable.icon_camera))
                 .setContent(goScanner);
         myTabHost.addTab(spec);
 
         Intent goSetting = new Intent().setClass(this,SettingActivity.class);
-        spec = myTabHost.newTabSpec("Tab4").setIndicator("Setting",
+        spec = myTabHost.newTabSpec("TabSetting").setIndicator("Setting",
                 getResources().getDrawable(R.drawable.icon_camera))
                 .setContent(goSetting);
         myTabHost.addTab(spec);
@@ -64,8 +76,12 @@ public class MainActivity extends ActionBarActivity {
         myTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if(tabId.equals("Tab3")) {
+                if(tabId.equals("TabCamera")) {
                     callScanner();
+                }else if(tabId.equals("TabPromotion")){
+                    setPromotionHomepage();
+                }else if(tabId.equals("TabHistory")){
+                    setHistoryHomepage();
                 }
             }
         });
@@ -114,12 +130,34 @@ public class MainActivity extends ActionBarActivity {
 
     public void sendBarcodeToSlip(String barcode)
     {
-        switchTab(1);
+        switchTab(SlipTabIndex);
         Activity currentActivity = myLocalActivityManager.getActivity(myTabHost.getCurrentTabTag());
         if(currentActivity != null && currentActivity instanceof SlipActivity)
         {
 // pass to children
             ((SlipActivity)currentActivity).addItem(barcode);
+        }
+    }
+
+    public void setPromotionHomepage()
+    {
+        switchTab(PromotionTabIndex);
+        Activity currentActivity = myLocalActivityManager.getActivity(myTabHost.getCurrentTabTag());
+        if(currentActivity != null && currentActivity instanceof PromotionActivity)
+        {
+// pass to children
+            ((PromotionActivity)currentActivity).showPromotionListPage();
+        }
+    }
+
+    public void setHistoryHomepage()
+    {
+        switchTab(HistoryTabIndex);
+        Activity currentActivity = myLocalActivityManager.getActivity(myTabHost.getCurrentTabTag());
+        if(currentActivity != null && currentActivity instanceof HistoryActivity)
+        {
+// pass to children
+            ((HistoryActivity)currentActivity).showPage1();
         }
     }
 

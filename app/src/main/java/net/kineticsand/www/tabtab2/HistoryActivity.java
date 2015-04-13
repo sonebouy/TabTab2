@@ -93,7 +93,7 @@ public class HistoryActivity extends ActionBarActivity {
 
     }
 
-    void showPage1(){
+    public void showPage1(){
         historyHeaderText.setVisibility(View.VISIBLE);
         dpResult.setVisibility(View.VISIBLE);
         historyShowBtn.setVisibility(View.VISIBLE);
