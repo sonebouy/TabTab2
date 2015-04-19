@@ -92,6 +92,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return product;
     }
 
+    public int getProductCount()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_PRODUCTS,new String[]{KEY_PID,KEY_BARCODE,KEY_NAME,KEY_PRICE,KEY_DID,KEY_UPDATE_DATE},null,null,null, null, null, null);
+        if (cursor != null) {
+            return cursor.getCount();
+        }
+        return 0;
+    }
+
     public void clearProducts(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABLE_PRODUCTS, null, null);

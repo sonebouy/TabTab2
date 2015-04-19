@@ -1,50 +1,113 @@
 package net.kineticsand.www.tabtab2;
 
 import android.app.Dialog;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class SettingActivity extends ActionBarActivity {
 
-    Button showBtn;
-    Button showBtn2;
-    Button clearHistoryButton;
+    ImageView updateProductBtn;
+    ImageView clearProductBtn;
+    ImageView clearHistoryButton;
 
+    TextView statusProduct;
+    TextView recordProduct;
+    TextView recordHistory;
+
+    public static SettingActivity instance;
+
+    String loadindStatus="Ready";
+
+    int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         getSupportActionBar().hide();
 
-        showBtn = (Button) findViewById(R.id.showBtn);
-        showBtn2 = (Button) findViewById(R.id.showBtn2);
-        clearHistoryButton = (Button)findViewById(R.id.clearHistoryBtn);
+        instance=this;
 
-        showBtn.setOnClickListener(new View.OnClickListener() {
+        updateProductBtn = (ImageView) findViewById(R.id.updateProductBtn);
+        clearProductBtn = (ImageView) findViewById(R.id.clearProductBtn);
+        clearHistoryButton = (ImageView)findViewById(R.id.clearHistoryBtn);
+
+        statusProduct = (TextView)findViewById(R.id.statusProduct);
+        recordProduct = (TextView)findViewById(R.id.recordProduct);
+        recordHistory = (TextView)findViewById(R.id.recordHistory);
+
+        final Handler handler = new Handler();
+        final Runnable runable = new Runnable() {
+            @Override
+            public void run() {
+                if(loadindStatus=="Loading")
+                {
+                    ProductDict.getInstance().webToDatabase();
+                    loadindStatus="Recording";
+                    refreshTextView();
+                    handler.postDelayed(this, 1);
+                }else if(loadindStatus=="Recording") {
+                    if(ProductDict.getInstance().saveLocalToDatabase())
+                    {
+                        refreshTextView();
+                        handler.postDelayed(this, 2);
+                    }else{
+                        loadindStatus="Ready";
+                        refreshTextView();
+                    }
+                }
+            }
+        };
+
+        updateProductBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ProductDict.getInstance().webToDatabase();
+                if(loadindStatus=="Ready") {
+                    ProductDict.getInstance().clearProducts();
+                    loadindStatus = "Loading";
+                    refreshTextView();
+                    handler.postDelayed(runable, 1);
+                }
             }
         });
 
-        showBtn2.setOnClickListener(new View.OnClickListener() {
+        clearProductBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ProductDict.getInstance().clearProducts();
+                refreshTextView();
             }
         });
 
         clearHistoryButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 HistoryDict.getInstance().clearHistories();
+                refreshTextView();
             }
         });
+
+        refreshTextView();
     }
+
+    public void refreshTextView()
+    {
+        if(loadindStatus=="Recording")
+        {
+            statusProduct.setText("Loading "+ProductDict.getInstance().getLoadingPercent()+"%");
+        }else {
+            statusProduct.setText(loadindStatus);
+        }
+        recordProduct.setText(ProductDict.getInstance().getProductCount()+"");
+        recordHistory.setText(HistoryDict.getInstance().getHistoriesCount()+"");
+    }
+
 
     void showText(String msg)
     {

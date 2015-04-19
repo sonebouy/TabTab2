@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.SimpleCursorAdapter;
@@ -28,7 +29,7 @@ import java.util.List;
 public class SlipActivity extends ActionBarActivity {
 
     BasketAdapter adapter;
-    Button saveBtn;
+    ImageView saveBtn;
     ListView listview;
     TextView totalText;
     TextView discountText;
@@ -43,7 +44,7 @@ public class SlipActivity extends ActionBarActivity {
         getSupportActionBar().hide();
 
         listview = (ListView) findViewById(R.id.basketListView);
-        saveBtn = (Button) findViewById(R.id.saveBtn);
+        saveBtn = (ImageView) findViewById(R.id.saveBtn);
         totalText =(TextView) findViewById(R.id.totalText);
         discountText =(TextView) findViewById(R.id.discountText);
         netTotalText =(TextView) findViewById(R.id.netTotalText);
@@ -93,29 +94,61 @@ public class SlipActivity extends ActionBarActivity {
         netTotalText.setText(String.format( "%.2f",total-discount));
     }
 
-    public void addItem(String barcode){
-        ProductDict dict = ProductDict.getInstance();
+    public void addItem(String _barcode){
+        final String barcode=_barcode;
+        final ProductDict dict = ProductDict.getInstance();
         if(!dict.hasBarcode(barcode))
         {
             Toast.makeText(getApplicationContext(),"Not have "+barcode, Toast.LENGTH_SHORT).show();
             return;
         }
-        for(int i=0;i<allItem.size();i++)
-        {
-            ItemInfo item = allItem.get(i);
-            if(item.barcode.equals(barcode))
-            {
-                item.amount++;
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.confirm_dialog);
+        dialog.setTitle("Confirm Product");
+
+        final TextView barcodeDialog = (TextView)dialog.findViewById(R.id.barcodeDialog);
+        final TextView productDialog = (TextView)dialog.findViewById(R.id.productDialog);
+        final TextView priceDialog = (TextView)dialog.findViewById(R.id.priceDialog);
+        ImageView dialogButton = (ImageView) dialog.findViewById(R.id.buyDialogButton);
+        ImageView binDialogButton = (ImageView) dialog.findViewById(R.id.binDialogButton);
+
+        Product product= dict.getProduct(barcode);
+        barcodeDialog.setText(product.barcode);
+        productDialog.setText(product.name);
+        priceDialog.setText(product.price+"");
+
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                for(int i=0;i<allItem.size();i++)
+                {
+                    ItemInfo item = allItem.get(i);
+                    if(item.barcode.equals(barcode))
+                    {
+                        item.amount++;
+                        refreshAdapter();
+                        return;
+                    }
+                }
+                ItemInfo item = new ItemInfo();
+                item.amount = 1;
+                item.barcode = barcode;
+                item.product = dict.getProduct(barcode);
+                allItem.add(item);
                 refreshAdapter();
-                return;
             }
-        }
-        ItemInfo item = new ItemInfo();
-        item.amount = 1;
-        item.barcode = barcode;
-        item.product = dict.getProduct(barcode);
-        allItem.add(item);
-        refreshAdapter();
+        });
+
+        binDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
     }
 
     public void openNumberDialog(String productName,int oldValue){

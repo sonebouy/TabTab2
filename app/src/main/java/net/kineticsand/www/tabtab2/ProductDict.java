@@ -1,6 +1,7 @@
 package net.kineticsand.www.tabtab2;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -14,6 +15,10 @@ public class ProductDict {
     DatabaseHandler db;
     WebServiceReader wsr;
     Context context;
+
+    public List<Product> products;
+    int dbCount=-1;
+
     private static ProductDict ourInstance = new ProductDict();
     public static ProductDict getInstance() {
         return ourInstance;
@@ -46,18 +51,44 @@ public class ProductDict {
     }
 
     public void webToDatabase(){
-        List<Product> products = wsr.getProducts();
-        for(int i=0;i<products.size();i++) {
-            db.addProduct(products.get(i));
-        }
-        showText("Get data from web "+products.size()+"records.");
+        products = wsr.getProducts();
     }
+
+    public boolean saveLocalToDatabase()
+    {
+        for(int i=0;i<19;i++) {
+            int count = getProductCount();
+            if (count >= products.size()) {
+                return false;
+            }
+            db.addProduct(products.get(count));
+            dbCount++;
+        }
+        return true;
+    }
+
+    public int getLoadingPercent()
+    {
+        int now = getProductCount();
+        int total = products.size();
+        return (now*100)/total;
+    }
+
 
     public void clearProducts()
     {
+        dbCount=0;
         db.clearProducts();
     }
 
+    public int getProductCount()
+    {
+        if(dbCount==-1)
+        {
+            dbCount=db.getProductCount();
+        }
+        return dbCount;
+    }
 
     void showText(String msg)
     {
@@ -66,3 +97,4 @@ public class ProductDict {
 
 
 }
+

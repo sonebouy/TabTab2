@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -29,14 +30,14 @@ public class HistoryActivity extends ActionBarActivity {
 
     TextView historyHeaderText;
     DatePicker dpResult;
-    Button historyShowBtn;
+    ImageView historyShowBtn;
     TextView historyDateTextView;
     LinearLayout historyListHeader;
     ListView historyListView;
     LinearLayout historyTotalLayout;
     LinearLayout historyDiscountLayout;
     LinearLayout historyNetLayout;
-    Button historyBackBtn;
+    ImageView historyBackBtn;
     TextView historyTotalText;
     TextView historyDiscountText;
     TextView historyNetText;
@@ -57,14 +58,14 @@ public class HistoryActivity extends ActionBarActivity {
 
         historyHeaderText = (TextView) findViewById(R.id.historyHeaderText);
         dpResult = (DatePicker) findViewById(R.id.dpResult);
-        historyShowBtn = (Button) findViewById(R.id.historyShowBtn);
+        historyShowBtn = (ImageView) findViewById(R.id.historyShowBtn);
         historyDateTextView = (TextView) findViewById(R.id.historyDateTextView);
         historyListHeader = (LinearLayout) findViewById(R.id.historyListHeader);
         historyListView = (ListView) findViewById(R.id.historyListView);
         historyTotalLayout = (LinearLayout) findViewById(R.id.historyTotalLayout);
         historyDiscountLayout = (LinearLayout) findViewById(R.id.historyDiscountLayout);
         historyNetLayout = (LinearLayout) findViewById(R.id.historyNetLayout);
-        historyBackBtn = (Button) findViewById(R.id.historyBackBtn);
+        historyBackBtn = (ImageView) findViewById(R.id.historyBackBtn);
         historyTotalText = (TextView)findViewById(R.id.historyTotalText);
         historyDiscountText = (TextView)findViewById(R.id.historyDiscountText);
         historyNetText = (TextView)findViewById(R.id.historyNetText);

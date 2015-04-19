@@ -107,6 +107,16 @@ public class DatabaseHistoryHandler extends SQLiteOpenHelper {
         return histories;
     }
 
+    public int getHistoriesCount()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_HISTORIES,new String[]{KEY_NAME,KEY_PRICE,KEY_AMOUNT},null,null,null, null, null, null);
+        if (cursor != null) {
+            return cursor.getCount();
+        }
+        return 0;
+    }
+
     public void clearHistorys(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABLE_HISTORIES, null, null);

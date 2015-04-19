@@ -82,6 +82,8 @@ public class MainActivity extends ActionBarActivity {
                     setPromotionHomepage();
                 }else if(tabId.equals("TabHistory")){
                     setHistoryHomepage();
+                }else if(tabId.equals("TabSetting")){
+                    refreshSettingpage();
                 }
             }
         });
@@ -149,6 +151,18 @@ public class MainActivity extends ActionBarActivity {
             ((PromotionActivity)currentActivity).showPromotionListPage();
         }
     }
+
+    public void refreshSettingpage()
+    {
+        switchTab(SettingTabIndex);
+        Activity currentActivity = myLocalActivityManager.getActivity(myTabHost.getCurrentTabTag());
+        if(currentActivity != null && currentActivity instanceof SettingActivity)
+        {
+// pass to children
+            ((SettingActivity)currentActivity).refreshTextView();
+        }
+    }
+
 
     public void setHistoryHomepage()
     {

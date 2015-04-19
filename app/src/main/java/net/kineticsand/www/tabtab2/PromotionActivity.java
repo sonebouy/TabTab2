@@ -42,7 +42,7 @@ public class PromotionActivity extends ActionBarActivity {
     ScrollView ProlistBuy31;
     ScrollView ProlistSale2;
 
-    Button BackBtn;
+    ImageView BackBtn;
 
     int selectedIndex=0;
 
@@ -68,7 +68,7 @@ public class PromotionActivity extends ActionBarActivity {
         ProlistBuy21 = (ScrollView)findViewById(R.id.prolist_buy21);
         ProlistBuy31 = (ScrollView)findViewById(R.id.prolist_buy31);
         ProlistSale2 = (ScrollView)findViewById(R.id.prolist_sale2);
-        BackBtn = (Button)findViewById(R.id.backBtn);
+        BackBtn = (ImageView)findViewById(R.id.backBtn);
 
         IconRedHot =(ImageView)findViewById(R.id.icon_redhot);
         IconSale =(ImageView)findViewById(R.id.icon_sale);

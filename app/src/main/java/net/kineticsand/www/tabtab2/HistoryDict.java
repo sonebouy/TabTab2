@@ -31,9 +31,15 @@ public class HistoryDict {
         return db.getHistories(insert_date);
     }
 
+    public int getHistoriesCount()
+    {
+        return db.getHistoriesCount();
+    }
+
     public void clearHistories()
     {
         db.clearHistorys();
     }
+
 
 }
